@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Camera Finder";
+}
+
+<header>
+    <img style="width:100%; text-align:center"  src="~/Content/images/Photography.png" alt="man taking image with camera"/>    
+</header>
+
+<div class="row">
+     <div class=""
+
+</div>
+<div class="panel-default panel">Compare and contrast cameras, older and newer, to see camera evolution. See how your camera measures up to other cameras.</div>
+
+<div></div>
+
+
+
+
+
+@section scripts {
+    <script type="text/javascript">
+
+       const SendData = async (url, data) => {
+  try {
+    const response = await fetch(url, {
+      method: method,
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" }
+    });
+    console.log(response.status);
+    if (!response.ok) {
+      console.log(response.statusText);
+      let text = await response.text();
+      alert(text);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.log(err.message);
+    alert("An error occurred when contacting server. Unable to complete.");
+    return false;
+  }
+};
+const GetNonApiData = async (url) =>{
+  url = window.baseUrl + url;
+  try {
+    const response = await fetch(url, {
+      method: 'get',
+      headers: {
+        "Content-Type": "text/plain"
+      }
+    });
+    if(!response.ok){
+        console.log(`Get Failure: ${response.statusText}`)
+        let text = await response.text();
+        alert("Could not get data from server: " + text);
+        return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    alert("Unable to connect to database. Please try again later.");
+  }
+}
+const GetData = async (api, method = 'get', urlParam = undefined) => {
+    let url = window.baseUrl + `api/${api}/${method}`;
+    if(urlParam){
+        url += `/${urlParam}`
+    }
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "text/plain"
+      }
+    });
+    if(!response.ok){
+        console.log(`Get Failure: ${response.statusText}`)
+        let text = await response.text();
+        alert("Could not get data from server: " + text);
+        return null;
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log(err.message);
+    alert("Unable to connect to database. Please try again later.");
+  }
+};
+
+
+
+            
+
+    </script>
+}
